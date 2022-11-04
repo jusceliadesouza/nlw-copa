@@ -23,6 +23,7 @@ export function Pools() {
           leftIcon={
             <Icon as={Octicons} name="search" color="black" size="md" />
           }
+          
         />
       </VStack>
     </VStack>
