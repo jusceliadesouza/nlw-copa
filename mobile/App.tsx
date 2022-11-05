@@ -9,11 +9,11 @@ import {
 import { Find } from "./src/screens/Find";
 import { Loading } from "./src/components/Loading";
 import { New } from "./src/screens/New";
+import { Pools } from "./src/screens/Pools";
 import { SignIn } from "./src/screens/SignIn";
 
 import { THEME } from "./src/styles/theme";
 import { AuthContextProvider } from "./src/contexts/AuthContext";
-import { Pools } from "./src/screens/Pools";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -31,7 +31,7 @@ export default function App() {
           translucent
         />
 
-        {fontsLoaded ? <Pools /> : <Loading />}
+        {fontsLoaded ? <SignIn /> : <Loading />}
       </AuthContextProvider>
     </NativeBaseProvider>
   );
