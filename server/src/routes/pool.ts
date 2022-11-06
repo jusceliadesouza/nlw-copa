@@ -139,8 +139,8 @@ export async function poolRoutes(fastify: FastifyInstance) {
               user: {
                 select: {
                   avatarUrl: true,
-                }
-              }
+                },
+              },
             },
             take: 4,
           },
@@ -158,8 +158,9 @@ export async function poolRoutes(fastify: FastifyInstance) {
   );
 
   // Detalhes de um bolão
+
   fastify.get(
-    "/pool/:id",
+    "/pools/:id",
     {
       onRequest: [authenticate],
     },
@@ -169,6 +170,39 @@ export async function poolRoutes(fastify: FastifyInstance) {
       });
 
       const { id } = getPoolsParams.parse(request.params);
+
+      const pool = await prisma.pool.findUnique({
+        where: {
+          id,
+        },
+        include: {
+          _count: {
+            select: {
+              participants: true,
+            },
+          },
+          participants: {
+            select: {
+              id: true,
+
+              user: {
+                select: {
+                  avatarUrl: true,
+                },
+              },
+            },
+            take: 4,
+          },
+          owner: {
+            select: {
+              id: true,
+              name: true,
+            },
+          },
+        },
+      });
+
+      return { pool };
     }
   );
 
