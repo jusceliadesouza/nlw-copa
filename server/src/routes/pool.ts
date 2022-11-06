@@ -205,9 +205,4 @@ export async function poolRoutes(fastify: FastifyInstance) {
       return { pool };
     }
   );
-
-  //  TODO
-  // Listagem de jogos de um bolão
-
-  // Criação de um palpite
 }
