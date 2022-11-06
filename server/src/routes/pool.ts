@@ -55,7 +55,7 @@ export async function poolRoutes(fastify: FastifyInstance) {
 
   // Entrada no bolão
   fastify.post(
-    "pools/:id/join",
+    "/pools/join",
     {
       onRequest: [authenticate],
     },
@@ -84,6 +84,7 @@ export async function poolRoutes(fastify: FastifyInstance) {
         });
       }
 
+      // Condição para bolão sem dono
       if (pool.participants.length > 0) {
         return reply.status(400).send({
           message: "You already joined this pool!",
@@ -112,11 +113,66 @@ export async function poolRoutes(fastify: FastifyInstance) {
     }
   );
 
-  //  TODO
-  // Bolões que o usuário participa
+  // Relação de Bolões que o usuário participa
+  fastify.get(
+    "/pools",
+    {
+      onRequest: [authenticate],
+    },
+    async (request) => {
+      const pools = await prisma.pool.findMany({
+        where: {
+          participants: {
+            some: { userId: request.user.sub },
+          },
+        },
+        include: {
+          _count: {
+            select: {
+              participants: true,
+            },
+          },
+          participants: {
+            select: {
+              id: true,
+
+              user: {
+                select: {
+                  avatarUrl: true,
+                }
+              }
+            },
+            take: 4,
+          },
+          owner: {
+            select: {
+              id: true,
+              name: true,
+            },
+          },
+        },
+      });
+
+      return { pools };
+    }
+  );
 
   // Detalhes de um bolão
+  fastify.get(
+    "/pool/:id",
+    {
+      onRequest: [authenticate],
+    },
+    async (request) => {
+      const getPoolsParams = z.object({
+        id: z.string(),
+      });
 
+      const { id } = getPoolsParams.parse(request.params);
+    }
+  );
+
+  //  TODO
   // Listagem de jogos de um bolão
 
   // Criação de um palpite
