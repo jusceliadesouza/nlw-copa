@@ -3,6 +3,7 @@ import { Share } from "react-native";
 import { HStack, useToast, VStack } from "native-base";
 import { useRoute } from "@react-navigation/native";
 
+import { Guesses } from "../components/Guesses";
 import { Header } from "../components/Header";
 import { Loading } from "../components/Loading";
 import { PoolCardProps } from "../components/PoolCard";
@@ -90,6 +91,7 @@ export function Details() {
               }}
             />
           </HStack>
+          <Guesses poolId={poolDetails.id}/>
         </VStack>
       ) : (
         <EmptyMyPoolList code={poolDetails.code} />
