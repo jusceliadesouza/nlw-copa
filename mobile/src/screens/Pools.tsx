@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { VStack, Icon, useToast, FlatList } from "native-base";
 import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect } from "@react-navigation/native";
 
 import { api } from "../services/api";
 
@@ -38,9 +39,9 @@ export function Pools() {
     }
   }
 
-  useEffect(() => {
+  useFocusEffect(useCallback(() => {
     fetchPools();
-  }, []);
+  }, []));
 
   return (
     <VStack flex={1} bg="gray.900">
@@ -63,8 +64,9 @@ export function Pools() {
         />
       </VStack>
 
-      {
-        isLoading ? <Loading /> :
+      {isLoading ? (
+        <Loading />
+      ) : (
         <FlatList
           data={pools}
           keyExtractor={(item) => item.id}
@@ -74,7 +76,7 @@ export function Pools() {
           _contentContainerStyle={{ pb: 10 }}
           ListEmptyComponent={() => <EmptyPoolList />}
         />
-      }
+      )}
 
       {/* <Loading /> */}
     </VStack>
