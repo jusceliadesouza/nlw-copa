@@ -4,6 +4,7 @@ import { authenticate } from "../plugins/authenticate";
 import { z } from "zod";
 
 export async function gameRoutes(fastify: FastifyInstance) {
+  // Listagem de jogos de um bolão
   fastify.get(
     "/pools/:id/games",
     {
@@ -43,7 +44,4 @@ export async function gameRoutes(fastify: FastifyInstance) {
        };
     }
   );
-  //  TODO
-  // Listagem de jogos de um bolão
-  // Criação de um palpite
 }
