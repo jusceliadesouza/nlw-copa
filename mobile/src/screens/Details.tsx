@@ -3,15 +3,15 @@ import { Share } from "react-native";
 import { HStack, useToast, VStack } from "native-base";
 import { useRoute } from "@react-navigation/native";
 
+import { EmptyMyPoolList } from "../components/EmptyMyPoolList";
 import { Guesses } from "../components/Guesses";
 import { Header } from "../components/Header";
 import { Loading } from "../components/Loading";
+import { Option } from "../components/Option";
 import { PoolCardProps } from "../components/PoolCard";
+import { PoolHeader } from "../components/PoolHeader";
 
 import { api } from "../services/api";
-import { PoolHeader } from "../components/PoolHeader";
-import { EmptyMyPoolList } from "../components/EmptyMyPoolList";
-import { Option } from "../components/Option";
 
 interface RouteParams {
   id: string;
