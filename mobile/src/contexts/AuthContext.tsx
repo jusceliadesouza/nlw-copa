@@ -1,4 +1,5 @@
 import { createContext, ReactNode, useState, useEffect } from "react";
+
 import { api } from "../services/api";
 
 import * as Google from "expo-auth-session/providers/google";
@@ -29,8 +30,7 @@ export function AuthContextProvider({ children }: AuthProviderProps) {
   const [isUserLoading, setIsUserLoading] = useState(false);
 
   const [request, response, promptAsync] = Google.useAuthRequest({
-    clientId:
-      "468201598255-ui3mg3t983jiukldngogp7l23g970h0f.apps.googleusercontent.com",
+    clientId: process.env.CLIENT_ID,
     redirectUri: AuthSession.makeRedirectUri({ useProxy: true }),
     scopes: ["profile", "email"],
   });
@@ -56,8 +56,8 @@ export function AuthContextProvider({ children }: AuthProviderProps) {
         "Authorization"
       ] = `Bearer ${tokenResponse.data.token}`;
 
-      const userInfoResponse = await api.get('/me')
-      setUser(userInfoResponse.data.user)
+      const userInfoResponse = await api.get("/me");
+      setUser(userInfoResponse.data.user);
     } catch (error) {
       console.log(error);
       throw error;
